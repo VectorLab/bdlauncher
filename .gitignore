@@ -1,0 +1,8 @@
+.gdb_history
+build/*
+!build/.keep
+mods/*/mod.so
+.settings
+.settings/*
+.cproject
+.project

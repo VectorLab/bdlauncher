@@ -1,0 +1,5 @@
+{
+	"name":"bettergive",
+	"loadmode":0,
+	"dependency":["bdlbase","bdlheader","command"]
+}

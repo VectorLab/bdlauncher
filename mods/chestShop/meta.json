@@ -1,0 +1,5 @@
+{
+	"name":"chestShop",
+	"loadmode":0,
+	"dependency":["bdlbase","bdlheader","command","money"]
+}
