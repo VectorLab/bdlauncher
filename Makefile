@@ -35,7 +35,7 @@ clean:
 genconfig:
 	@./script/genconfig.sh $(CC) $(CXX)
 
-build/zydis: lib/zydis/CMakeLists.txt
+build/zydis/usr: lib/zydis/CMakeLists.txt
 	@./script/cmake_zydis.sh $(CC) $(CXX)
 
 # old .PHONY: clean
@@ -53,6 +53,6 @@ build/preload.so: $(_DLL_PRELOAD_OBJ) $(_DLL_PRELOAD_LIB)
 
 # Object Target
 
-build/%.o: preload/%.cpp build/zydis
+build/%.o: preload/%.cpp build/zydis/usr
 	$(call compile,$@,$< -I include -I build/zydis/usr/include )
 
