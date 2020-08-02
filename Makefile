@@ -24,7 +24,7 @@ endef
 all: preload genconfig
 
 .PHONY: preload
-preload: build/zydis build/preload.so
+preload: build/zydis/usr build/preload.so
 
 .PHONY: clean
 clean:
