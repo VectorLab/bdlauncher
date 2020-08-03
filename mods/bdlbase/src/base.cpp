@@ -29,7 +29,8 @@ using std::vector;
 #include <minecraft/net/LoopbackPacketSender.h>
 #include <minecraft/net/NetworkIdentifier.h>
 #include <minecraft/packet/BinaryStream.h>
-#include <minecraft/packet/MyPkt.h>
+//#include <minecraft/packet/MyPkt.h>
+#include <minecraft/packet/TextPacket.h>
 #include <sstream>
 #include <string>
 
@@ -217,7 +218,7 @@ public:
                 this.putString(this.xboxUserId);
             this.putString(this.platformChatId);
     }*/
-struct MyTxtPk {
+/*struct MyTxtPk {
   string_view str;
   TextType type;
   MyPkt *pk;
@@ -233,15 +234,24 @@ struct MyTxtPk {
     });
   }
   void send(Player *p) { ((ServerPlayer *)p)->sendNetworkPacket(*pk); }
-};
-MyTxtPk gTextPkt;
-void sendText(Player *a, string_view ct, TextType type) {
-  gTextPkt.setText(ct, type);
-  gTextPkt.send(a);
+};*/
+//MyTxtPk gTextPkt;
+void sendText(Player* p1, string_view p2, TextType p3) {
+// TDOD impl TextType
+//  gTextPkt.setText(ct, type);
+//  gTextPkt.send(a);
+std::string v1;
+v1+=p2;
+TextPacket v2=TextPacket::createSystemMessage(v1);
+((ServerPlayer*)p1)->sendNetworkPacket(v2);
 }
-void broadcastText(string_view ct, TextType type) {
-  gTextPkt.setText(ct, type);
-  MCPKTSEND->sendBroadcast(*gTextPkt.pk);
+void broadcastText(string_view p1, TextType p2) {
+// TDOD impl TextType
+//  gTextPkt.setText(ct, type);
+std::string v1;
+v1+=p2;
+TextPacket v2=TextPacket::createSystemMessage(v1);
+  MCPKTSEND->sendBroadcast(v2);
 }
 
 void TeleportA(Actor &a, Vec3 b, AutomaticID<Dimension, int> c) {
