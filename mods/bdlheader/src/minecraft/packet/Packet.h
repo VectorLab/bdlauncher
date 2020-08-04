@@ -16,6 +16,7 @@ public:
   virtual std::string getName() const       = 0;
   virtual void write(BinaryStream &) const  = 0;
   virtual void read(ReadOnlyBinaryStream &) = 0;
+  virtual int readExtended(ReadOnlyBinaryStream &stream);
   virtual bool disallowBatching(void) const;
   unsigned char getClientSubId() const;
 };

@@ -2,12 +2,19 @@
 #include <mlr/logger.h>
 #include <mlr/statichook.h>
 
-THook(bool, _ZNK13LevelSettings23hasAchievementsDisabledEv,
-      LevelSettings *this_ptr) {
+THook(bool, _ZNK13LevelSettings23hasAchievementsDisabledEv, LevelSettings *this_ptr) {
   if (fixer::fixLevelSettings(this_ptr)) {
     do_log("error fixed: LevelSettings::hasAchievementsDisabled");
   }
   return false;
+};
+
+THook(LevelSettings*, _ZN13LevelSettings22setAchievementDisabledEb, LevelSettings* this_ptr, bool p1){
+  do_log("LevelSettings request set AchievementDisabled to %d",p1);
+  if (fixer::fixLevelSettings(this_ptr)) {
+    do_log("error fixed: LevelSettings::setAchievementDisabled");
+  }
+  return this_ptr;
 };
 
 THook(bool, _ZNK13LevelSettings32achievementsWillBeDisabledOnLoadEv,
