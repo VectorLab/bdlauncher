@@ -8,6 +8,7 @@ class Item;
 class ItemInstance;
 class BlockLegacy;
 class RecipeIngredient;
+class Block;
 
 extern "C" {
 void _ZN9ItemStackD0Ev(void *);

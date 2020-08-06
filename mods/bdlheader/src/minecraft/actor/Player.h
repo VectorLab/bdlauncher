@@ -54,6 +54,8 @@ public:
   bool isCreative(void) const;
   Certificate &getCertificate() const;
   std::string getXUID() const { return ExtendedCertificate::getXuid(getCertificate()); }
+  
+  bool drop(ItemStack const&, bool);
 };
 
 class ServerPlayer : public Player {

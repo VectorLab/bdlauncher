@@ -3,14 +3,17 @@
 #include <string_view>
 #include "minecraft/core/types.h"
 #include "gsl/string_span"
+#include "ReadOnlyBinaryStream.h"
 
-class BinaryStream {
+class BinaryStream:public ReadOnlyBinaryStream{
 public:
-
-  char filler[312];
+std::string writebuf,*pwbuf;
 
   BinaryStream();
-  BinaryStream(std::string &, bool);
+  BinaryStream(std::string&&);
+  BinaryStream(std::string const&);
+  BinaryStream(std::string&, bool owned);
+
   void writeFloat(float);
   void writeDouble(double);
   void writeStream(BinaryStream &);
@@ -44,4 +47,7 @@ public:
     writeFloat(vc.z);
   }
   void writeString(gsl::basic_string_span<char const, -1l>);
+  
+  template<typename T>
+  void writeType(T const&);
 };

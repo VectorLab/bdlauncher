@@ -6,6 +6,7 @@ class ItemStack;
 class BlockPos;
 class Block;
 class Vec3;
+class ServerPlayer;
 class GameMode {
 public:
   void* vtbl;

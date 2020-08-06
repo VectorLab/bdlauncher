@@ -3,6 +3,7 @@
 #include <memory>
 #include <vector>
 class BlockLegacy;
+class CompoundTag;
 
 class ItemStackBase {
 public:

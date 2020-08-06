@@ -1,13 +1,17 @@
 #pragma once
-#include <cstring>
-#include <dlfcn.h>
+#include <string>
+#include <cstdint>
 
-struct ReadOnlyBinaryStream {
-  char filler[256];
-  ReadOnlyBinaryStream(string *x) {
-    auto fn = dlsym(NULL, "_ZN20ReadOnlyBinaryStreamC2EONSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE");
-    void (*fnn)(void *, string *);
-    fnn = (typeof(fnn)) fn;
-    fnn(this, x);
-  }
+class ReadOnlyBinaryStream {
+public:
+size_t read_pointer{};
+bool unk_1;
+std::string ownbuf,*pbuf;
+ReadOnlyBinaryStream(std::string&& buffer);
+ReadOnlyBinaryStream(std::string const& buffer,bool owned);
+virtual ~ReadOnlyBinaryStream();
+virtual bool read(void*,unsigned long);
+  
+  template<typename T>
+  T getType();
 };
