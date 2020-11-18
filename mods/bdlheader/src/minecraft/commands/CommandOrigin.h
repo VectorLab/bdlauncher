@@ -66,8 +66,8 @@ class ServerCommandOrigin : public CommandOrigin {
 
 public:
   ServerCommandOrigin(
-      std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>> const &, ServerLevel &,
-      CommandPermissionLevel);
+      std::string const &, ServerLevel &,
+      CommandPermissionLevel,Dimension*);
   virtual ~ServerCommandOrigin();
   virtual std::string getRequestId() const;
   virtual std::string getName() const;

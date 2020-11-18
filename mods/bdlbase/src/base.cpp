@@ -38,15 +38,15 @@ using std::vector;
 #include "hook.h"
 
 extern "C" {
-PUB_EXPORT Minecraft *MC;
-PUB_EXPORT Level *ServLevel;
+PUB_EXPORT Minecraft *MC=nullptr;
+PUB_EXPORT Level *ServLevel=nullptr;
 }
 
 struct DedicatedServer {
   void stop();
 };
 
-DedicatedServer *dserver;
+DedicatedServer *dserver=nullptr;
 int lvlCorrupt;
 THook(void *, _ZN14ServerInstance14onLevelCorruptEv, void *x) {
   printf("LEVEL CORRUPT DETECTED!!!\n");
@@ -75,7 +75,7 @@ THook(void *, _ZN14ServerInstance14onLevelCorruptEv, void *x) {
     exit(1);
   }
   return nullptr;
-}
+};
 
 static ServerNetworkHandler *MCSNH;
 static LoopbackPacketSender *MCPKTSEND;
@@ -105,15 +105,17 @@ THook(
   }
   sp_net[a1] = a8;
   return ret;
-}
+};
+
 THook(void *, _ZN12ServerPlayerD0Ev, ServerPlayer *sp) {
   sp_net.erase(sp);
   return original(sp);
-}
+};
+
 void base_sendPkt(ServerPlayer *sp, Packet &pk) {
   auto i = sp_net[sp];
   MCPKTSEND->sendToClient(*getPlayerNeti(*sp), pk, i);
-}
+};
 // export APIS
 void split_string(string_view s, std::vector<std::string_view> &v,
                   string_view c) {
@@ -127,7 +129,8 @@ void split_string(string_view s, std::vector<std::string_view> &v,
   }
   if (pos1 != s.length())
     v.emplace_back(s.data() + pos1, s.size() - pos1);
-}
+};
+
 void split_string(string_view s, static_deque<std::string_view> &v,
                   string_view c) {
   std::string::size_type pos1, pos2;
@@ -142,11 +145,12 @@ void split_string(string_view s, static_deque<std::string_view> &v,
   }
   if (pos1 != s.length() && !v.full())
     v.push_back(string_view(s.data() + pos1, s.size() - pos1));
-}
+};
+
 bool execute_cmd_random(const static_deque<string_view> &chain) {
   auto rd = rand() % chain.size();
   return execute_cmdchain(chain[rd], "", false);
-}
+};
 
 bool execute_cmdchain(string_view chain, string_view sp, bool chained) {
   auto fg = false;
@@ -188,7 +192,8 @@ bool execute_cmdchain(string_view chain, string_view sp, bool chained) {
       return false;
   }
   return true;
-}
+};
+
 class TeleportCommand:public Command{
 public:
   char filler[0x250];
@@ -244,7 +249,7 @@ std::string v1;
 v1+=p2;
 TextPacket v2=TextPacket::createSystemMessage(v1);
 ((ServerPlayer*)p1)->sendNetworkPacket(v2);
-}
+};
 void broadcastText(string_view p1, TextType p2) {
 // TDOD impl TextType
 //  gTextPkt.setText(ct, type);
@@ -252,7 +257,7 @@ std::string v1;
 v1+=p2;
 TextPacket v2=TextPacket::createSystemMessage(v1);
   MCPKTSEND->sendBroadcast(v2);
-}
+};
 
 void TeleportA(Actor &a, Vec3 b, AutomaticID<Dimension, int> c) {
 RelativeFloat tp_arg_float;
@@ -263,7 +268,7 @@ ActorUniqueID const& v1_auid=a.getUniqueID();
   } else {
     TeleportCommand::teleport(a, b, nullptr, c,tp_arg_float,tp_arg_float,0,v1_auid);
   }
-}
+};
 
 ServerPlayer *getplayer_byname2(string_view name) {
   ServerPlayer *rt = NULL;
@@ -285,7 +290,7 @@ ServerPlayer *getplayer_byname2(string_view name) {
     continue;
   }
   return rt;
-}
+};
 
 /*void get_player_names(vector<string> &a) {
   auto vc = ServLevel->getUsers();
@@ -310,7 +315,7 @@ THook(
   MCPKTSEND = access(MCSNH, LoopbackPacketSender *, 88);
   do_log("pkt send %p snh %p", MCPKTSEND, MCSNH);
   return ret;
-}
+};
 
 THook(
     void *,
@@ -319,7 +324,7 @@ THook(
   do_log("starting server %p", t);
   dserver = t;
   return original(t, b);
-}
+};
 static int ctrlc;
 static void autostop() {
   ctrlc++;
@@ -331,14 +336,14 @@ static void autostop() {
     do_log("stoping server");
     dserver->stop();
   }
-}
+};
 int getPlayerCount() { return ServLevel->getUserCount(); }
 // TODO fix
 //int getMobCount() { return ServLevel->getTickedMobCountPrevious(); }
 
 NetworkIdentifier *getPlayerNeti(ServerPlayer &sp) {
   return (NetworkIdentifier *)(((char *)&sp) + SPEC_NETI_OFFSET);
-}
+};
 ServerPlayer *getuser_byname(string_view a) {
   auto vc = ServLevel->getUsers();
   for (auto &i : *vc) {
@@ -346,12 +351,12 @@ ServerPlayer *getuser_byname(string_view a) {
       return i.get();
   }
   return nullptr;
-}
+};
 void forceKickPlayer(ServerPlayer &sp) {
   // MCSNH->disconnectClient(*getPlayerNeti(sp),"Kicked",false);
   MCSNH->onSubclientLogoff(*getPlayerNeti(sp), sp_net[&sp]);
   // sp.disconnect();
-}
+};
 extern "C" {
 void _ZTV19ServerCommandOrigin();
 void _ZN19ServerCommandOriginD2Ev();
@@ -366,19 +371,19 @@ MCRESULT
 _ZNK17MinecraftCommands23requestCommandExecutionESt10unique_ptrI13CommandOriginSt14default_deleteIS1_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEib(
     MinecraftCommands *, CommandOrigin **, std::string const &, int, bool);
 };
-PUB_EXPORT MCRESULT runcmd(string_view a) {
+PUB_EXPORT MCRESULT runcmd(string_view a,int b) {
   // ServerOrigin is const so we can simply share it here
   // char fakeOrigin[72];
   CommandOrigin **ori_ptr = (CommandOrigin **)&SCO;
   if (!SCO) {
     SCO = new ServerCommandOrigin(sname, *(ServerLevel *)MC->getLevel(),
-                                  (CommandPermissionLevel)5);
+                                  (CommandPermissionLevel)5,((ServerLevel *)(MC->getLevel()))->getDimension({b}));
     access(SCO, void *, 0) = fake_vtbl + 2;
   }
   // memcpy(fakeOrigin,SCO,sizeof(fakeOrigin));
   return _ZNK17MinecraftCommands23requestCommandExecutionESt10unique_ptrI13CommandOriginSt14default_deleteIS1_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEib(
       MCCMD, ori_ptr, string(a), 4, 1);
-}
+};
 PUB_EXPORT MCRESULT runcmdAs(string_view a, Player *sp) {
   // auto ori=(CommandOrigin*)new PlayerCommandOrigin(*sp);
   char origin[40];
@@ -388,7 +393,7 @@ PUB_EXPORT MCRESULT runcmdAs(string_view a, Player *sp) {
   access(ori_ptr, Level *, 32) = ServLevel;
   return _ZNK17MinecraftCommands23requestCommandExecutionESt10unique_ptrI13CommandOriginSt14default_deleteIS1_EERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEib(
       MCCMD, &ori_ptr, string(a), 4, 1);
-}
+};
 static vector<pair<void (*)(void *, ServerPlayer *), void *>> SPD2EvHooks;
 PUB_EXPORT void
 regSPD2EvHooks(pair<void (*)(void *, ServerPlayer *), void *> x) {
@@ -399,7 +404,8 @@ THook(void *, _ZN12ServerPlayerD2Ev, ServerPlayer *thi) {
     i.first(i.second, thi);
   }
   return original(thi);
-}
+};
+
 static void dummy__() {}
 void onLoad(ModContext *__tmp_1) {
   uintptr_t *pt = (uintptr_t *)_ZTV19ServerCommandOrigin;
@@ -414,4 +420,17 @@ void onLoad(ModContext *__tmp_1) {
   fake_vtbl_ply[2] = fake_vtbl_ply[3] = (void *)dummy__;
   do_log("loaded!");
   signal(SIGINT, (sighandler_t)autostop);
-}
+};
+
+void* base_getptr_Minecraft(){
+return MC;
+};
+
+void* base_getptr_Level(){
+return ServLevel;
+};
+
+void* base_getptr_DedicatedServer(){
+return dserver;
+};
+

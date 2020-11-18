@@ -72,6 +72,8 @@ public:
   LevelData* getLevelData();
   void broadcastLevelEvent(LevelEvent, CompoundTag const&, Player*);
   void broadcastLevelEvent(LevelEvent, Vec3 const&, int, Player*);
+  
+  Dimension* getDimension(AutomaticID<Dimension,int>)const;
 };
 
 class ServerLevel : public Level {

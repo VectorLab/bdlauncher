@@ -37,7 +37,7 @@ PUB_EXPORT void broadcastText(string_view ct, TextType type = RAW);
 PUB_EXPORT void TeleportA(Actor &a, Vec3 b, AutomaticID<Dimension, int> c);
 PUB_EXPORT ServerPlayer *getplayer_byname2(string_view name);
 PUB_EXPORT void get_player_names(vector<string> &a);
-PUB_EXPORT MCRESULT runcmd(string_view a);
+PUB_EXPORT MCRESULT runcmd(string_view a,int dim=0);
 PUB_EXPORT MCRESULT runcmdAs(string_view a, Player *sp);
 
 PUB_EXPORT void split_string(string_view s, std::vector<std::string_view> &v,
@@ -102,3 +102,7 @@ using std::pair;
 #ifdef BDL_TAG
 #error "DEPRECATED BDL_TAG"
 #endif
+PUB_EXPORT void* base_getptr_Minecraft();
+PUB_EXPORT void* base_getptr_Level();
+PUB_EXPORT void* base_getptr_DedicatedServer();
+
