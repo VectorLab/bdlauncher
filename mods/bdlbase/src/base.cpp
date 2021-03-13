@@ -199,7 +199,7 @@ public:
   char filler[0x250];
   TeleportCommand();
   ~TeleportCommand();
-  static void teleport(Actor&, Vec3, Vec3*, AutomaticID<Dimension, int>, RelativeFloat, RelativeFloat, int, ActorUniqueID const&);
+  static void teleport(Actor&, Vec3, Vec3*, AutomaticID<Dimension, int>, RelativeFloat, RelativeFloat, int);
 };
 // https://github.com/PetteriM1/NukkitPetteriM1Edition/blob/master/src/main/java/cn/nukkit/network/protocol/TextPacket.java
 /* this.putByte(this.type);
@@ -261,12 +261,12 @@ TextPacket v2=TextPacket::createSystemMessage(v1);
 
 void TeleportA(Actor &a, Vec3 b, AutomaticID<Dimension, int> c) {
 RelativeFloat tp_arg_float;
-ActorUniqueID const& v1_auid=a.getUniqueID();
+//ActorUniqueID const& v1_auid=a.getUniqueID();
   if (a.getDimensionId() != c) {
-    TeleportCommand::teleport(a, b, nullptr, c,tp_arg_float,tp_arg_float,0,v1_auid);
-    TeleportCommand::teleport(a, b, nullptr, c,tp_arg_float,tp_arg_float,0,v1_auid);
+    TeleportCommand::teleport(a, b, nullptr, c,tp_arg_float,tp_arg_float,0);
+    TeleportCommand::teleport(a, b, nullptr, c,tp_arg_float,tp_arg_float,0);
   } else {
-    TeleportCommand::teleport(a, b, nullptr, c,tp_arg_float,tp_arg_float,0,v1_auid);
+    TeleportCommand::teleport(a, b, nullptr, c,tp_arg_float,tp_arg_float,0);
   }
 };
 

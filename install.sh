@@ -21,20 +21,15 @@ fi
 
 echo "install to: " $PREFIX;
 
+echo -n "install base module..."
+
 # install preload.so
 cp -f ./build/preload.so $PREFIX/preload.so
 
 # install s
 echo '#!/bin/bash' > $PREFIX/s
 echo 'LD_LIBRARY_PATH=. LD_PRELOAD=preload.so ./bedrock_server' >> $PREFIX/s
-chmod 755 $PREFIX/s
-
-# install mods
-if [ -d "$PREFIX/mods" ]; then
-echo -n > /dev/null
-else
-cp -r ./mods $PREFIX/mods
-fi
+chmod +x $PREFIX/s
 
 # install bdl
 if [ -d "$PREFIX/mlr" ]; then
@@ -61,4 +56,24 @@ cp ./build/cc $PREFIX/mlr/config/cc
 cp ./build/cxx $PREFIX/mlr/config/cxx
 chmod 755 $PREFIX/mlr/config/cc
 chmod 755 $PREFIX/mlr/config/cxx
+
+echo " done."
+
+# install mods
+if [ -d "$PREFIX/mods" ]; then
+echo "upgrade mods start"
+for mod_name in mods/* ; do
+if [ -d "$PREFIX/$mod_name" ]; then
+rm -rf "$PREFIX/$mod_name"
+cp -r $mod_name "$PREFIX/$mod_name"
+echo "upgrade:" $mod_name
+fi
+done
+echo "upgrade mods done"
+else
+echo "install default mods"
+cp -r ./mods $PREFIX/mods
+fi
+
+echo "done."
 
