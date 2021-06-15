@@ -1,5 +1,0 @@
-{
-	"name":"luckyachievement",
-	"loadmode":0,
-	"dependency":["bdlbase","bdlheader"]
-}

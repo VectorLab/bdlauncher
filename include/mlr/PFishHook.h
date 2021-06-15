@@ -1,5 +1,5 @@
 #pragma once
-
+/* https://github.com/Menooker/PFishHook  Apache-2.0 */
 enum HookStatus
 {
 	FHSuccess,

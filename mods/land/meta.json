@@ -1,6 +1,0 @@
-{
-	"name":"land",
-	"loadmode":0,
-	"dependency":["bdlbase","bdlheader","command","gui","money","ldbimpl","bdlcmdgendef"],
-	"solist":["leveldb"]
-}

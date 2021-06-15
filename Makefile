@@ -1,4 +1,8 @@
 
+CFLAGS+= `pkg-config jsoncpp --cflags`
+CXXFLAGS+= `pkg-config jsoncpp --cflags`
+LDFLAGS+= `pkg-config jsoncpp --libs`
+
 CFLAGS+= -fPIC -s -O3 -std=gnu17
 CXXFLAGS+= -fPIC -s -O3 -std=gnu++17
 # -Wall -Werror

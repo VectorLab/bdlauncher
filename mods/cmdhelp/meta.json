@@ -1,6 +1,0 @@
-{
-	"name":"cmdhelp",
-	"loadmode":0,
-	"dependency":["bdlbase","bdlheader","command","gui","ldbimpl"],
-	"solist":["leveldb"]
-}

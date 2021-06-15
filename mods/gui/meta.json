@@ -1,5 +1,0 @@
-{
-	"name":"gui",
-	"loadmode":1,
-	"dependency":["bdlbase","bdlheader"]
-}

@@ -1,5 +1,0 @@
-{
-	"name":"bdlbase",
-	"loadmode":0,
-	"dependency":["bdlheader"]
-}

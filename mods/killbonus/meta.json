@@ -1,5 +1,0 @@
-{
-	"name":"killbonus",
-	"loadmode":0,
-	"dependency":["bdlbase","bdlheader","command","money","bdlcmdgendef"]
-}

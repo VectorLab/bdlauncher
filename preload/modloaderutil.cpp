@@ -3,7 +3,7 @@
 #include <mlr/modloaderutil.h>
 #include <fstream>
 
-#include <minecraft/json.h>
+#include <json/json.h>
 
 std::unordered_map<std::string, mlr_filename_type> mlr_filename_type_values({
     {"", mlr_filename_type::tnull},
@@ -111,13 +111,13 @@ ModContext* tryLoadMeta(std::filesystem::path &t_dir) {
     do_log("%s", msg.c_str());
     exit(1);
   }
-  ret->name = value["name"].asString("");
+  ret->name = value["name"].asString();
   if (ret->name.empty()) {
     do_log("name not found: %s", t_dir.c_str());
     exit(1);
   }
   uint32_t load_mode_temp = static_cast<uint32_t>(ret->load_mode);
-  load_mode_temp = value["loadmode"].asUInt(load_mode_temp);
+  load_mode_temp = value["loadmode"].asUInt();
   if (load_mode_temp > 3) {
     do_log("%s not has a valid loadmode", t_dir.c_str());
     exit(1);
@@ -127,7 +127,7 @@ ModContext* tryLoadMeta(std::filesystem::path &t_dir) {
   if (value["dependency"].isArray()) {
     i = 0, c = value["dependency"].size();
     while (i < c) {
-      std::string t_name(value["dependency"][i].asString(""));
+      std::string t_name(value["dependency"][i].asString());
       ret->dep_list.insert({t_name, nullptr});
       ++i;
     }
@@ -135,13 +135,13 @@ ModContext* tryLoadMeta(std::filesystem::path &t_dir) {
   if (value["solist"].isArray()) {
     i = 0, c = value["solist"].size();
     while (i < c) {
-      std::string t_name(value["solist"][i].asString(""));
+      std::string t_name(value["solist"][i].asString());
       ret->m_libsharedobj.push_back(t_name);
       ++i;
     }
   }
   if (value["debug"].isBool()) {
-    ret->debug = value["debug"].asBool(false);
+    ret->debug = value["debug"].asBool();
   }
 
   ret->datadir = path_mlr_def::p___moddata;

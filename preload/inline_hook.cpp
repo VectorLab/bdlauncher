@@ -8,7 +8,7 @@
 #include <mlr/PFishHook.h>
 #include <math.h>
 #include <sys/syscall.h>
-
+/* https://github.com/Menooker/PFishHook  Apache-2.0 */
 
 static size_t PageSize2= 0;
 static ZydisFormatter formatter;
@@ -139,7 +139,7 @@ struct MemChunk{
 		memset(buffer,0xcc,MCHUNK_SZ2);
 	}
 };
-static_assert(sizeof(MemChunk)==MCHUNK_SZ);
+static_assert(sizeof(MemChunk)==MCHUNK_SZ, "sizeof(MemChunk)!=MCHUNK_SZ");
 MemChunk* pPool=nullptr;
 #define ADDR_OK(x,y) (AddressDiff(x, y) < ((1ULL << 31) - 1))
 static char* TryAlloc(size_t sz,void* addr){

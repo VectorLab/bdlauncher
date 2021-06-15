@@ -1,5 +1,0 @@
-{
-	"name":"ldbimpl",
-	"loadmode":1,
-	"solist":["leveldb"]
-}

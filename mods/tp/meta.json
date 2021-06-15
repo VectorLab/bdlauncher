@@ -1,6 +1,0 @@
-{
-	"name":"tp",
-	"loadmode":0,
-	"dependency":["bdlbase","bdlheader","command","gui","ldbimpl","bdlcmdgendef"],
-	"solist":["leveldb"]
-}
