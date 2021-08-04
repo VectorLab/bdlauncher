@@ -12,15 +12,15 @@ CXXFLAGS+= -fPIC -s -O3 -std=gnu++17
 
 define compile
 	@echo " CXX $(1)"
-	@$(CXX) $(CXXFLAGS) -c -o $(1) $(2)
+	@$(CXX) -c -o $(1) $(2) $(CXXFLAGS)
 endef
 define compilec
 	@echo " CC  $(1)"
-	@$(CC) $(CFLAGS) -c -o $(1) $(2)
+	@$(CC) -c -o $(1) $(2) $(CFLAGS)
 endef
 define link
 	@echo " LD  $(1)"
-	@$(CXX) $(LDFLAGS) $(2) -o $(1) $(3)
+	@$(CXX) $(2) -o $(1) $(3) $(LDFLAGS)
 endef
 
 # Phony Targets

@@ -54,6 +54,12 @@ void launcher_modloaader_main() {
   for (auto &[name, meta] : mod_list) {
     meta->load();
   }
+  do_log("load ok , start post load");
+  for (auto &[name, meta] : mod_list) {
+    if(nullptr!=meta->onPostLoad){
+      meta->onPostLoad();
+    }
+  }
   do_log("everything is ok");
   for (auto &[name, meta] : mod_list) {
     delete meta;

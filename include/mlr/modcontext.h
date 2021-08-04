@@ -30,6 +30,7 @@ public:
   mod.so
   */
   std::function<void(ModContext*)> onChildLoad=nullptr;
+  std::function<void(void)> onPostLoad=nullptr;
 
   std::filesystem::path basedir;
   std::filesystem::path datadir;

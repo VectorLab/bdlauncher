@@ -44,13 +44,14 @@ void CompileSoTask::run() {
           objfile /= objname.c_str();
 
           std::string cmd(path_mlr_def::p___mlr_sconfig_scxx.c_str());
-          cmd += this->cxxflags;
-          cmd += "-o ";
+          cmd += " -o ";
           cmd += objfile.c_str();
           cmd += ' ';
           cmd += a_path.c_str();
           cmd += ' ';
           cmd += __I_include;
+          cmd += ' ';
+          cmd += this->cxxflags;
           /*
           ExecShellTask cmdexec;
           cmdexec.cmd=cmd.c_str();
@@ -77,13 +78,14 @@ void CompileSoTask::run() {
           objfile /= objname.c_str();
 
           std::string cmd(path_mlr_def::p___mlr_sconfig_scc.c_str());
-          cmd += this->cflags;
-          cmd += "-o ";
+          cmd += " -o ";
           cmd += objfile.c_str();
           cmd += ' ';
           cmd += a_path.c_str();
           cmd += ' ';
           cmd += __I_include;
+          cmd += ' ';
+          cmd += this->cflags;
 
           /*
           ExecShellTask cmdexec;
@@ -113,8 +115,7 @@ void CompileSoTask::run() {
   }
 
   std::string linkcmdstr(path_mlr_def::p___mlr_sconfig_scxx.c_str());
-  linkcmdstr += this->ldflags;
-  linkcmdstr += "-o ";
+  linkcmdstr += " -o ";
   linkcmdstr += this->p_out.c_str();
 
   i = 0;
@@ -144,6 +145,9 @@ void CompileSoTask::run() {
     linkcmdstr += " -l";
     linkcmdstr += this->m_libsharedobj.at(i);
   }
+  linkcmdstr += " ";
+  linkcmdstr += this->ldflags;
+  
   /*
   ExecShellTask linkcmdexec;
   linkcmdexec.cmd=linkcmdstr.c_str();
