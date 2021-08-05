@@ -44,6 +44,7 @@ public:
 
   std::filesystem::path p___mod_dso;
   std::filesystem::path p___src;
+  std::filesystem::path p___include;
   std::filesystem::path p___data;
   std::filesystem::path p___lib;
   std::filesystem::path p___meta_djson;

@@ -115,7 +115,12 @@ void ModContext::load() {
       compiletask.p_src = this->p___src;
 
       for (auto &[t_name, t_meta] : this->dep_list) {
-        compiletask.p_include.push_front(t_meta->p___src);
+        if(std::filesystem::is_directory(t_meta->p___include)){
+          compiletask.p_include.push_front(t_meta->p___include);
+        }
+      }
+      if(std::filesystem::is_directory(this->p___include)){
+        compiletask.p_include.push_front(this->p___include);
       }
       if (std::filesystem::is_directory(this->p___lib)) {
         // impl static lib

@@ -1,7 +1,7 @@
 
 #include <mlr/modmain.h>
 #include <mlr/logger.h>
-#include "mlrbase.h"
+#include <mlrbase/base.h>
 
 #include <cstring>
 #include <fstream>
@@ -11,13 +11,13 @@ struct mlrbase_t mlrbase;
 
 void onLoad(ModContext* mcfg){
 char v2[0x10000];
-std:ssize_t v1;
-v1=readlink("/proc/self/exe",v2,0x10000);
-if(v1<0){
-do_log("Fatal error: failed to get bedrock_server real path");
+std::error_code v1;
+mlrbase.bds_bin_path=std::filesystem::read_symlink("/proc/self/exe",v1);
+if(v1){
+do_log("Fatal error: failed to get bedrock_server real path: %d",v1.value());
 return;
 }
-mlrbase.bds_bin_path=std::string(v2);
+do_log_debug("bedrock_server path: %s",mlrbase.bds_bin_path.c_str());
 std::string v3="nm --no-demangle -D ";
 v3+=mlrbase.bds_bin_path;
 v3+=" | grep _ZdlPv 2>&1";

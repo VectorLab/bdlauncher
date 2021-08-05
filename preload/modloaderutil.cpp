@@ -94,6 +94,8 @@ ModContext* tryLoadMeta(std::filesystem::path &t_dir) {
   ret->basedir = t_dir;
   ret->p___src = t_dir;
   ret->p___src /= "src";
+  ret->p___include = t_dir;
+  ret->p___include /= "include";
   ret->p___data = t_dir;
   ret->p___data /= "data";
   ret->p___lib = t_dir;

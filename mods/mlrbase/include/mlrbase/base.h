@@ -1,6 +1,7 @@
 
 #include <cstdint>
 #include <string>
+#include <filesystem>
 
 extern "C" {
 void _ZdlPv(void*);
@@ -10,7 +11,7 @@ struct mlrbase_t{
 
 // RO
 std::size_t bds_mem_offset;
-std::string bds_bin_path;
+std::filesystem::path bds_bin_path;
 
 };
 
