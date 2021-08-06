@@ -18,6 +18,8 @@ do_log("Fatal error: failed to get bedrock_server real path: %d",v1.value());
 return;
 }
 do_log_debug("bedrock_server path: %s",mlrbase.bds_bin_path.c_str());
+//mlrbase.bds_mem_offset=0x00400000;
+//return;
 std::string v3="nm --no-demangle -D ";
 v3+=mlrbase.bds_bin_path;
 v3+=" | grep _ZdlPv 2>&1";

@@ -3,6 +3,8 @@
 #include <string>
 #include <filesystem>
 
+#include <mlr/pubexport.h>
+
 extern "C" {
 void _ZdlPv(void*);
 };
@@ -15,12 +17,12 @@ std::filesystem::path bds_bin_path;
 
 };
 
-extern struct mlrbase_t mlrbase;
+PUB_EXPORT extern struct mlrbase_t mlrbase;
 
 // hex_in,bin_out,bin_size 
-void mlrbase_hex2bin_unsafe(const char*,char*,std::size_t);
+PUB_EXPORT void mlrbase_hex2bin_unsafe(const char*,char*,std::size_t);
 // bin_in,hex_out,bin_size 
-void mlrbase_bin2hex_unsafe(const char*,char*,std::size_t);
+PUB_EXPORT void mlrbase_bin2hex_unsafe(const char*,char*,std::size_t);
 
 // mlrbase_reg_hook
 
